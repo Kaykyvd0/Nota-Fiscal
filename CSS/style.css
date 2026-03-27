@@ -1,0 +1,275 @@
+/* --- RESET E PADRÃO (MANTIDO) --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Ajuste para o container aguentar mais botões */
+.bank-list-container {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+/* --- ESTILOS DO FORMULÁRIO (MANTIDO) --- */
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #007bff;
+}
+
+.login-button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+/* --- ESTILOS ESPECÍFICOS DA PÁGINA DE SUCESSO (NOVOS E CORRIGIDOS) --- */
+.success-content h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.bank-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bank-button {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bank-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.bank-button img {
+    height: 30px; /* Tamanho padronizado */
+    width: auto;
+    margin-right: 1.5rem;
+    object-fit: contain; /* Garante que o logo não fique distorcido */
+    filter: none; /* CORREÇÃO IMPORTANTE: Removemos o filtro! Usamos os logos coloridos originais */
+}
+
+.bank-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* Cores dos botões - Cor de Fundo de Marca */
+.bank-itau {
+    background-color: #000000;
+    color: white;
+}
+
+.bank-nubank {
+    background-color: #8A05BE;
+    color: white;
+}
+
+.bank-bradesco {
+    background-color: #4d0413;
+    color: white;
+}
+
+.bank-santander {
+    background-color: #000000;
+    color: white;
+}
+
+.bank-mercadopago {
+    background-color: #009ee3;
+    color: white;
+}
+
+.inter {
+    background-color: #000000;
+    color: white;
+}
+
+.bb {
+    background-color: #FCF100;
+    color: #004691;
+}
+
+.back-link {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.nf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.nf-logo-img {
+    height: 35px;
+    max-width: 120px;
+    object-fit: contain;
+}
+
+/* Informações e Status */
+.nf-info-geral {
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
+
+.status-badge {
+    background: #fff3cd;
+    color: #856404;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+/* Tabela de Produtos */
+.nf-detalhes h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
+}
+
+.produtos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.produtos-table th {
+    text-align: left;
+    border-bottom: 2px solid #eee;
+    padding: 10px 5px;
+    color: #888;
+}
+
+.produtos-table td {
+    padding: 12px 5px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.produtos-table tfoot td {
+    border-top: 2px solid #eee;
+    padding-top: 15px;
+    font-size: 16px;
+}
+
+/* Botões de Ação */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-pay, .btn-print {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-pay { background: #28a745; color: white; }
+.btn-pay:hover { background: #218838; }
+
+.btn-print { background: #007bff; color: white; }
+.btn-print:hover { background: #0069d9; }
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    color: #888;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* Ajuste de Impressão */
+@media print {
+    body { background: white; }
+    .actions, .back-link { display: none; }
+    .login-container { box-shadow: none; border: 1px solid #eee; }
+}

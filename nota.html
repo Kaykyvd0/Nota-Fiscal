@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Nota Fiscal</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="login-container nf-container">
+        <div class="nf-header">
+            <img id="banco-logo" src="" alt="Banco" class="nf-logo-img">
+            <h2 id="banco-nome">Nota Fiscal</h2>
+        </div>
+
+        <div class="nf-info-geral">
+            <p><strong>Status:</strong> <span class="status-badge">Aguardando Pagamento</span></p>
+            <p><strong>Vencimento:</strong> 30/03/2026</p>
+        </div>
+
+        <hr>
+
+        <div class="nf-detalhes">
+            <h3>Produtos / Serviços</h3>
+            <table class="produtos-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qtd</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-produtos">
+                    <tr>
+                        <td>Assinatura Premium</td>
+                        <td>1</td>
+                        <td>R$ 90,00</td>
+                    </tr>
+                    <tr>
+                        <td>Taxa de Serviço</td>
+                        <td>1</td>
+                        <td>R$ 10,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><strong>Total</strong></td>
+                        <td><strong>R$ 100,00</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="actions">
+            <button class="btn-print" onclick="window.print()">Imprimir PDF</button>
+            <button class="btn-pay" onclick="confirmarPagamento()">Pagar Agora</button>
+        </div>
+
+        <a href="success.html" class="back-link">Voltar para a lista</a>
+    </div>
+
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const bancoEscolhido = params.get('banco') || 'itau';
+
+    // "Base de dados" das faturas
+    const faturas = {
+        itau: {
+            nome: "Fatura Itaú Unibanco",
+            logo: "https://logodownload.org/wp-content/uploads/2014/05/itau-logo-0.png",
+            cor: "#EC7000",
+            itens: [
+                { nome: "Anuidade Cartão Visa", qtd: 1, preco: "R$ 45,00" },
+                { nome: "Seguro Residencial", qtd: 1, preco: "R$ 22,90" }
+            ],
+            total: "R$ 67,90"
+        },
+        nubank: {
+            nome: "Fatura Nubank S.A.",
+            logo: "https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-4.png",
+            cor: "#8A05BE",
+            itens: [
+                { nome: "Compra: Supermercado", qtd: 1, preco: "R$ 120,50" },
+                { nome: "Assinatura Streaming", qtd: 1, preco: "R$ 34,90" }
+            ],
+            total: "R$ 155,40"
+        },
+        bradesco: {
+            nome: "Fatura Bradesco",
+            logo: "https://companieslogo.com/img/orig/BBD-6b19aac5.png?t=1720244490",
+            cor: "#cc092f",
+            itens: [
+                { nome: "Tarifa Bancária", qtd: 1, preco: "R$ 15,00" },
+                { nome: "Empréstimo Pessoal", qtd: 1, preco: "R$ 450,00" }
+            ],
+            total: "R$ 465,00"
+        },
+
+        santander: {
+            nome: "Banco Santander Brasil",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Santander_Logo.PNG/1280px-Santander_Logo.PNG?_=20180709094153",
+            cor: "#ec0000",
+            itens: [
+                { nome: "Financiamento Veicular", qtd: 1, preco: "R$ 850,00" },
+                { nome: "Seguro Proteção Premiada", qtd: 1, preco: "R$ 19,90" }
+            ],
+            total: "R$ 869,90"
+        },
+        mercadopago: {
+            nome: "Mercado Pago Instituição",
+            logo: "https://logodownload.org/wp-content/uploads/2019/06/mercado-pago-logo-1.png",
+            cor: "#009ee3",
+            itens: [
+                { nome: "Mercado Livre: Camisa São Bento", qtd: 1, preco: "R$ 180,00" },
+                { nome: "Pagamento de Conta de Luz", qtd: 1, preco: "R$ 215,30" }
+            ],
+            total: "R$ 395,30"
+        },
+        
+        inter: {
+            nome: "Fatura Banco Inter",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo-banco-inter.svg/3840px-Logo-banco-inter.svg.png",
+            cor: "#ff7a00",
+            itens: [
+                { nome: "Investimento CDB", qtd: 1, preco: "R$ 500,00" },
+                { nome: "Recarga Celular", qtd: 1, preco: "R$ 30,00" }
+            ],
+            total: "R$ 530,00"
+        },
+
+        bb: {
+            nome: "Banco do Brasil S.A.",
+            logo: "https://logodownload.org/wp-content/uploads/2014/05/banco-do-brasil-logo-0.png",
+            cor: "#FCF100",
+            itens: [
+                { nome: "Crédito Agrícola", qtd: 1, preco: "R$ 2.500,00" },
+                { nome: "Mensalidade Conta Fácil", qtd: 1, preco: "R$ 10,00" }
+            ],
+            total: "R$ 2.510,00"
+
+        }
+        
+    };
+
+    // Função para preencher a página
+    function carregarFatura() {
+        const dados = faturas[bancoEscolhido];
+        if (!dados) return;
+
+        // Atualiza Logo e Título
+        document.getElementById('banco-logo').src = dados.logo;
+        document.getElementById('banco-nome').innerText = dados.nome;
+        
+        // Muda a cor do botão de pagar para a cor do banco
+        document.querySelector('.btn-pay').style.backgroundColor = dados.cor;
+
+        // Limpa e preenche a tabela de produtos
+        const lista = document.getElementById('lista-produtos');
+        lista.innerHTML = ""; // Limpa o que estava antes
+
+        dados.itens.forEach(item => {
+            const linha = `
+                <tr>
+                    <td>${item.nome}</td>
+                    <td>${item.qtd}</td>
+                    <td>${item.preco}</td>
+                </tr>
+            `;
+            lista.innerHTML += linha;
+        });
+
+        // Atualiza o Total
+        document.querySelector('tfoot td:last-child strong').innerText = dados.total;
+    }
+
+    // Executa ao abrir a página
+    carregarFatura();
+
+    function confirmarPagamento() {
+        alert("Pagamento de " + faturas[bancoEscolhido].total + " confirmado via " + bancoEscolhido.toUpperCase());
+    }
+</script>
+</body>
+</html>
